@@ -24,8 +24,8 @@ public class SuperHeroController : ControllerBase
     public async Task<ActionResult<SuperHero>> Get(int id)
     {
         var hero = await _context.SuperHeroes.FindAsync(id);
-        if (hero == null)
-            return new OkObjectResult(BadRequest("Hero not found."));
+        if (hero == null) return NotFound("Hero not found.");
+
         return Ok(hero);
     }
 
@@ -43,7 +43,8 @@ public class SuperHeroController : ControllerBase
     {
         var dbHero = await _context.SuperHeroes.FindAsync(request.Id);
         if (dbHero == null)
-            return new OkObjectResult(BadRequest("Hero not found."));
+            return NotFound("Hero not found.");
+
         dbHero.Name = request.Name;
         dbHero.FirstName = request.FirstName;
         dbHero.LastName = request.LastName;
@@ -57,7 +58,8 @@ public class SuperHeroController : ControllerBase
     {
         var hero = await _context.SuperHeroes.FindAsync(id);
         if (hero == null)
-            return new OkObjectResult(BadRequest("Hero not found."));
+            return NotFound("Hero not found.");
+
         return Ok(hero);
     }
 }
