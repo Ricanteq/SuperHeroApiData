@@ -54,12 +54,17 @@ public class SuperHeroController : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    public async Task<ActionResult<SuperHero>> Delete(int id)
+    public async Task<ActionResult> Delete(int id)
     {
         var hero = await _context.SuperHeroes.FindAsync(id);
         if (hero == null)
+        {
             return NotFound("Hero not found.");
+        }
 
-        return Ok(hero);
+        _context.SuperHeroes.Remove(hero);
+        await _context.SaveChangesAsync();
+        return Ok();
     }
+
 }
